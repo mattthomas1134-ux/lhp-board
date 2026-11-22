@@ -407,7 +407,7 @@ const css=`
 #lhp .scb.cu{flex:2.4 1 auto}
 #lhp .sci b{display:block;-webkit-line-clamp:unset;overflow:visible;color:#fff}
 #lhp .sci em{display:block;-webkit-line-clamp:unset;overflow:visible;color:#2ecc71}
-#lhp .scb.mini .sci em{color:#8a8a8e;opacity:1}
+#lhp .scb.mini .sci em{color:#2ecc71;opacity:.75}
 #lhp .scb.dn .sci em{color:#6fae8a}
 #lhp .zov{position:absolute;inset:0;z-index:6;display:flex;padding:2.4vmin;box-sizing:border-box}
 #lhp .zov::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.84)}
@@ -579,8 +579,8 @@ const css=`
 #lhp .hd button:active,#lhp .tabs button:active{transform:scale(.94)}
 #lhp .zs{transition:none}
 #lhp .rst{padding:.2vmin .8vmin;font-size:1.7vmin;letter-spacing:0;line-height:1;min-width:0}
-#lhp .scb.mini .sci b{font-size:max(calc(1.5vmin*var(--s,1)*var(--z,1)),calc(1.75vmin*var(--s,1)))}
-#lhp .scb.mini .sci em{font-size:max(calc(1.1vmin*var(--s,1)*var(--z,1)),calc(1.3vmin*var(--s,1)));font-weight:500}
+#lhp .scb.mini .sci b{font-size:max(calc(1.5vmin*var(--s,1)*var(--z,1)),calc(1.4vmin*var(--s,1)))}
+#lhp .scb.mini .sci em{font-size:max(calc(1.25vmin*var(--s,1)*var(--z,1)),calc(1.2vmin*var(--s,1)))}
 #lhp .scc.tight .scb.mini .sci em{display:none}
 #lhp .scc.adm .scb.cu{gap:calc(1.1vmin*var(--z,1));padding-top:calc(.45vmin*var(--z,1));padding-bottom:calc(.45vmin*var(--z,1))}
 #lhp .scc.adm .scb.cu .sci{margin:0}
@@ -887,7 +887,7 @@ return `<div class="gv"><div class="gh">${esc(wk.title||'Group workout')}<small>
 }
 function render(){
 const dl=day.toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'});
-const hd=`<div class="hd"><button class="lg" data-act="home"><img src="${LOGO}" alt="Landing"></button><button data-act="prev">◀</button><div class="day">${esc(dl)}</div><button data-act="next">▶</button><button data-act="today">Today</button><button data-act="pick">＋ Add / remove</button><button data-act="snap" class="${exp&&!summary&&!clv&&!cnv?'on':''}">${exp&&!summary&&!clv&&!cnv?'Snapshot · Full':'Snapshot'}</button><button data-act="wod">Wodify</button><button data-act="clist" class="${clv?'on':''}">Clients</button><button data-act="cnotes" class="${cnv?'on':''}">Coach Notes</button><div class="sp"></div><div class="ts">v83 ${lastLoad?'· updated '+lastLoad.toLocaleTimeString([], {hour:'numeric',minute:'2-digit',second:'2-digit'}):''}</div><button data-act="edit" class="${edit?'on':''}" title="Coach mode: tap ✓ to complete">✎</button><button data-act="motion" class="${motionOn()?'on':''}" title="Animations on/off">✦</button><button data-act="fs">⛶</button><button data-act="close">✕</button></div>`;
+const hd=`<div class="hd"><button class="lg" data-act="home"><img src="${LOGO}" alt="Landing"></button><button data-act="prev">◀</button><div class="day">${esc(dl)}</div><button data-act="next">▶</button><button data-act="today">Today</button><button data-act="pick">＋ Add / remove</button><button data-act="snap" class="${exp&&!summary&&!clv&&!cnv?'on':''}">${exp&&!summary&&!clv&&!cnv?'Snapshot · Full':'Snapshot'}</button><button data-act="wod">Wodify</button><button data-act="clist" class="${clv?'on':''}">Clients</button><button data-act="cnotes" class="${cnv?'on':''}">Coach Notes</button><div class="sp"></div><div class="ts">v84 ${lastLoad?'· updated '+lastLoad.toLocaleTimeString([], {hour:'numeric',minute:'2-digit',second:'2-digit'}):''}</div><button data-act="edit" class="${edit?'on':''}" title="Coach mode: tap ✓ to complete">✎</button><button data-act="motion" class="${motionOn()?'on':''}" title="Animations on/off">✦</button><button data-act="fs">⛶</button><button data-act="close">✕</button></div>`;
 const cl=coachList(),slots=cc?coachSlots(cc):[];const tb=`<div class="tabs"><button data-tab="custom" class="${tab==='custom'?'on':''}">My six</button>${all.some(c=>c._grp)?`<button data-tab="group" class="${tab==='group'?'on':''}">Group</button>`:''}${cl.map(n=>`<button data-cc="${esc(n)}" class="${cc===n&&tab!=='custom'&&tab!=='group'?'on':''}">${esc(n)}</button>`).join('')}${hidN()?`<button data-act="unhide" class="unh">Show hidden (${hidN()})</button>`:''}${tabAll.length>MAX?`<span class="pgl"><button data-pg="-1">‹</button> ${pg*MAX+1}–${Math.min(tabAll.length,pg*MAX+MAX)} of ${tabAll.length} <button data-pg="1">›</button></span>`:''}</div>${tab!=='custom'&&tab!=='group'&&slots.length?`<div class="tabs sl">${slots.map(n=>`<button data-tab="${esc(n)}" class="${tab===n?'on':''}">${esc(n)}</button>`).join('')}</div>`:''}`;
 const fc=focus&&clients.find(c=>c.slug===focus);
 const n=clients.length;const LP={1:[1,1,1,1],2:[2,1,1,2],3:[3,1,1,3],4:[2,2,2,2],5:[6,2,4,3],6:[3,2,2,3]};const lp=LP[n]||null;const g=lp?[lp[0],lp[1]]:n<=9?[3,3]:n<=12?[4,3]:[4,4];const gp=lp?[lp[2],lp[3]]:[g[1],g[0]];
@@ -944,7 +944,7 @@ lastLoad=new Date();{const nr=clients.filter(c=>data[c.slug]&&!data[c.slug].rest
 const s=JSON.stringify(bub)+(focus?JSON.stringify(data[focus]):JSON.stringify(data))+JSON.stringify(comm)+focus+zSel+pick+snap+tab+Object.keys(gdet).map(k=>JSON.stringify(gdet[k].wk)).join('');
 const typing=document.activeElement&&document.activeElement.tagName==='INPUT'&&root.contains(document.activeElement);
 if(s!==sig&&!pick&&!typing&&Date.now()>=animUntil){sig=s;render();}
-else{const t=root.querySelector('.ts');if(t)t.textContent='v83 · updated '+lastLoad.toLocaleTimeString([], {hour:'numeric',minute:'2-digit',second:'2-digit'});}
+else{const t=root.querySelector('.ts');if(t)t.textContent='v84 · updated '+lastLoad.toLocaleTimeString([], {hour:'numeric',minute:'2-digit',second:'2-digit'});}
 }
 const SLOT=/^\d{1,2}:\d{2}\s*(?:AM|PM)\s+[A-Z]+(?:\s*-\s*\w+)?$/i;
 const slotMin=n=>{const m=n.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)/i);let h=+m[1]%12;if(/PM/i.test(m[3]))h+=12;return h*60+ +m[2];};
