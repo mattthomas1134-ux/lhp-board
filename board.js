@@ -600,6 +600,7 @@ const css=`
 #lhp .scc.adm .scb.cu .sci em.fx .fl.g2{margin-top:calc(2vmin*var(--z,1))}
 #lhp .scc.adm .scb.cu .sci em.fx .fl.g3{margin-top:calc(1.1vmin*var(--z,1))}
 #lhp .scc.adm .scb.cu .sci em.fx .fl.ph{margin-top:calc(1.2vmin*var(--z,1))}
+#lhp.anim-done .vw.vin .scc,#lhp.anim-done .scbody.ganim .scb{animation:none!important;opacity:1!important}
 #lhp .bub{position:fixed;z-index:70;max-width:36vmin;min-width:24vmin;background:#1c1c1e;border:.25vmin solid #3a3a3c;border-radius:2vmin;padding:1.6vmin 1.8vmin;box-shadow:0 1.2vmin 4vmin rgba(0,0,0,.7)}
 #lhp .bub b{display:block;font-size:2.2vmin;color:#fff;line-height:1.2;margin-bottom:.8vmin}
 #lhp .bub p{margin:0 0 .8vmin;font-size:1.9vmin;line-height:1.4;color:#2ecc71;font-weight:700;white-space:pre-line}
@@ -900,7 +901,7 @@ return `<div class="gv"><div class="gh">${esc(wk.title||'Group workout')}<small>
 }
 function render(){
 const dl=day.toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'});
-const hd=`<div class="hd"><button class="lg" data-act="home"><img src="${LOGO}" alt="Landing"></button><button data-act="prev">◀</button><div class="day">${esc(dl)}</div><button data-act="next">▶</button><button data-act="today">Today</button><button data-act="pick">＋ Add / remove</button><button data-act="snap" class="${exp&&!summary&&!clv&&!cnv?'on':tapM&&!summary&&!clv&&!cnv?'yl':''}">${exp&&!summary&&!clv&&!cnv?'Snapshot · Full':tapM&&!summary&&!clv&&!cnv?'Snapshot · Tap':'Snapshot'}</button><button data-act="wod">Wodify</button><button data-act="clist" class="${clv?'on':''}">Clients</button><button data-act="cnotes" class="${cnv?'on':''}">Coach Notes</button><div class="sp"></div><div class="ts">v88 ${lastLoad?'· updated '+lastLoad.toLocaleTimeString([], {hour:'numeric',minute:'2-digit',second:'2-digit'}):''}</div><button data-act="edit" class="${edit?'on':''}" title="Coach mode: tap ✓ to complete">✎</button><button data-act="motion" class="${motionOn()?'on':''}" title="Animations on/off">✦</button><button data-act="fs">⛶</button><button data-act="close">✕</button></div>`;
+const hd=`<div class="hd"><button class="lg" data-act="home"><img src="${LOGO}" alt="Landing"></button><button data-act="prev">◀</button><div class="day">${esc(dl)}</div><button data-act="next">▶</button><button data-act="today">Today</button><button data-act="pick">＋ Add / remove</button><button data-act="snap" class="${exp&&!summary&&!clv&&!cnv?'on':tapM&&!summary&&!clv&&!cnv?'yl':''}">${exp&&!summary&&!clv&&!cnv?'Snapshot · Full':tapM&&!summary&&!clv&&!cnv?'Snapshot · Tap':'Snapshot'}</button><button data-act="wod">Wodify</button><button data-act="clist" class="${clv?'on':''}">Clients</button><button data-act="cnotes" class="${cnv?'on':''}">Coach Notes</button><div class="sp"></div><div class="ts">v89 ${lastLoad?'· updated '+lastLoad.toLocaleTimeString([], {hour:'numeric',minute:'2-digit',second:'2-digit'}):''}</div><button data-act="edit" class="${edit?'on':''}" title="Coach mode: tap ✓ to complete">✎</button><button data-act="motion" class="${motionOn()?'on':''}" title="Animations on/off">✦</button><button data-act="fs">⛶</button><button data-act="close">✕</button></div>`;
 const cl=coachList(),slots=cc?coachSlots(cc):[];const tb=`<div class="tabs"><button data-tab="custom" class="${tab==='custom'?'on':''}">My six</button>${all.some(c=>c._grp)?`<button data-tab="group" class="${tab==='group'?'on':''}">Group</button>`:''}${cl.map(n=>`<button data-cc="${esc(n)}" class="${cc===n&&tab!=='custom'&&tab!=='group'?'on':''}">${esc(n)}</button>`).join('')}${hidN()?`<button data-act="unhide" class="unh">Show hidden (${hidN()})</button>`:''}${tabAll.length>MAX?`<span class="pgl"><button data-pg="-1">‹</button> ${pg*MAX+1}–${Math.min(tabAll.length,pg*MAX+MAX)} of ${tabAll.length} <button data-pg="1">›</button></span>`:''}</div>${tab!=='custom'&&tab!=='group'&&slots.length?`<div class="tabs sl">${slots.map(n=>`<button data-tab="${esc(n)}" class="${tab===n?'on':''}">${esc(n)}</button>`).join('')}</div>`:''}`;
 const fc=focus&&clients.find(c=>c.slug===focus);
 const n=clients.length;const LP={1:[1,1,1,1],2:[2,1,1,2],3:[3,1,1,3],4:[2,2,2,2],5:[6,2,4,3],6:[3,2,2,3]};const lp=LP[n]||null;const g=lp?[lp[0],lp[1]]:n<=9?[3,3]:n<=12?[4,3]:[4,4];const gp=lp?[lp[2],lp[3]]:[g[1],g[0]];
@@ -909,7 +910,7 @@ if((cnv||clv)&&!pick&&!arr){const need=clients.filter(c=>!cn[c.slug]||Date.now()
 {const zs0=root.querySelector('.zs');if(zs0&&focus)zsTop=zs0.scrollTop;}
 if(fc&&!arr&&(!cn[fc.slug]||Date.now()-cn[fc.slug].t>300000)){const sl=fc.slug;cnLoad(fc).then(()=>{if(focus===sl){const np=root.querySelector('.znotes');if(np)np.innerHTML=zNotes(clients.find(x=>x.slug===sl));}});}
 root.querySelectorAll('.sc').forEach(e=>{if(Date.now()<(scHold[e.dataset.s]||0))scTop[e.dataset.s]=e.scrollLeft;});
-const vk=(pick?'pick':tab==='group'&&!clv&&!cnv?'group'+snap:arr?'arr':snap?'snap':summary?'sum':clv?'cl':cnv?'cn':'grid')+'|'+tab+'|'+fmt(day)+'|'+pg;const ds=fmt(day);const dd=lastDayS&&ds!==lastDayS?(ds>lastDayS?1:-1):0;lastDayS=ds;const sameV=lastView===vk;const vin=lastView!==''&&vk!==lastView&&motionOn();lastView=vk;if(vin)animUntil=Date.now()+450;
+const vk=(pick?'pick':tab==='group'&&!clv&&!cnv?'group'+snap:arr?'arr':snap?'snap':summary?'sum':clv?'cl':cnv?'cn':'grid')+'|'+tab+'|'+fmt(day)+'|'+pg;const ds=fmt(day);const dd=lastDayS&&ds!==lastDayS?(ds>lastDayS?1:-1):0;lastDayS=ds;const sameV=lastView===vk;const vin=lastView!==''&&vk!==lastView&&motionOn();if(vin||(typeof goAnim!=='undefined'&&Object.keys(goAnim).some(k=>goAnim[k]>Date.now()))){root.classList.remove('anim-done');clearTimeout(window.__adT);window.__adT=setTimeout(()=>root.classList.add('anim-done'),2300);}lastView=vk;if(vin)animUntil=Date.now()+450;
 root.classList.toggle('nomo',!motionOn());
 {const zl0=root.querySelector('.zlist');if(zl0)zlTop=zl0.scrollTop;}
 {const HTMLX=hd+(pick?'':tb)+`<div class="vw${vin?(dd>0?' vin vr':dd<0?' vin vl':' vin'):''}">`+(pick?pickView():tab==='group'&&!clv&&!cnv?groupView(snap):arr?arrView():snap?snapView():summary?summaryView():clv?clView():cnv?cnView():snapView())+`</div>`+(fc&&!pick&&!arr&&tab!=='group'?focusView(fc):'')+(bub&&!fc&&!pick&&!arr?bubHtml():'');if(sameV&&!vin&&!fc&&!pick&&!arr&&/^(grid|snap)\|/.test(vk)&&root.children.length)patchHTML(HTMLX);else{root.innerHTML=HTMLX;recCols(HTMLX);}}
@@ -946,9 +947,9 @@ const r=await fetch(`/api/v1/clients/${c.slug}/workouts.json?start_date=${f}&end
 const m={__d:d0};a.filter(w=>w.due_date&&w.due_date.replace(/\//g,'-')<d0).sort((x,y)=>x.due_date<y.due_date?-1:1).forEach(w=>(w.workout_items||[]).forEach(i=>{if(i.status==='completed'&&i.result&&String(i.result).trim())m[bare(i.name)]=i.result;}));
 hist[c.slug]=m;}catch(e){}}));
 }
-async function load(){
+const failN={};async function load(){
 const d0=fmt(day),d1=fmt(new Date(day.getTime()+864e5));
-await Promise.all(clients.map(async c=>{try{const r=await fetch(`/api/v1/clients/${c.slug}/workouts.json?start_date=${d0}&end_date=${d1}&shape=lean`,H);if(r.status===401||r.status===403){authBad=true;throw new Error('auth');}const j=await r.json();authBad=false;const a=Array.isArray(j)?j:(j.workouts||[]);data[c.slug]=applyLocal(c,a.find(w=>w.due_date&&w.due_date.replace(/\//g,'-')===d0)||null);}catch(e){data[c.slug]=undefined;}}));
+await Promise.all(clients.map(async c=>{try{const r=await fetch(`/api/v1/clients/${c.slug}/workouts.json?start_date=${d0}&end_date=${d1}&shape=lean`,H);if(r.status===401||r.status===403){authBad=true;throw new Error('auth');}const j=await r.json();authBad=false;failN[c.slug]=0;const a=Array.isArray(j)?j:(j.workouts||[]);data[c.slug]=applyLocal(c,a.find(w=>w.due_date&&w.due_date.replace(/\//g,'-')===d0)||null);}catch(e){if(authBad||(failN[c.slug]=(failN[c.slug]||0)+1)>=4)data[c.slug]=undefined;}}));
 await Promise.all(clients.map(async c=>{const w=data[c.slug];if(!w||!w.comments_count)return;const k=w.id+':'+w.comments_count;if(k in comm)return;comm[k]='';
 try{const f=await (await fetch(`/api/v1/clients/${c.slug}/workouts/${w.id}`,H)).json();const cs=((f.workout||f).comments||[]).filter(x=>x.author&&x.author.type==='Client');if(cs.length)comm[k]=cs[cs.length-1].body||'';}catch(e){delete comm[k];}}));
 if(authBad){const t=root.querySelector('.ts');if(t)t.textContent='⚠ Signed out of CoachRx';if(!load.warned){load.warned=1;toast('CoachRx signed you out. Sign in, then tap the bookmark again.');}return;}load.warned=0;
@@ -957,7 +958,7 @@ lastLoad=new Date();{const nr=clients.filter(c=>data[c.slug]&&!data[c.slug].rest
 const s=JSON.stringify(bub)+(focus?JSON.stringify(data[focus]):JSON.stringify(data))+JSON.stringify(comm)+focus+zSel+pick+snap+tab+Object.keys(gdet).map(k=>JSON.stringify(gdet[k].wk)).join('');
 const typing=document.activeElement&&document.activeElement.tagName==='INPUT'&&root.contains(document.activeElement);
 if(s!==sig&&!pick&&!typing&&Date.now()>=animUntil){sig=s;render();}
-else{const t=root.querySelector('.ts');if(t)t.textContent='v88 · updated '+lastLoad.toLocaleTimeString([], {hour:'numeric',minute:'2-digit',second:'2-digit'});}
+else{const t=root.querySelector('.ts');if(t)t.textContent='v89 · updated '+lastLoad.toLocaleTimeString([], {hour:'numeric',minute:'2-digit',second:'2-digit'});}
 }
 const SLOT=/^\d{1,2}:\d{2}\s*(?:AM|PM)\s+[A-Z]+(?:\s*-\s*\w+)?$/i;
 const slotMin=n=>{const m=n.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)/i);let h=+m[1]%12;if(/PM/i.test(m[3]))h+=12;return h*60+ +m[2];};
@@ -1072,10 +1073,17 @@ ud={s:s0,nm:(all.find(c=>c.slug===s0)||{}).name||'Client',until:Date.now()+5000}
 (()=>{let raf=0;const upd=b=>{if(!motionOn()){b.querySelectorAll('.scb').forEach(x=>{x.style.removeProperty('--sz');});return;}const H=b.clientHeight;if(b.scrollHeight<=H+4){b.querySelectorAll('.scb').forEach(x=>{x.style.transform='';x.style.opacity='';});return;}const r=b.getBoundingClientRect(),mid=r.top+H/2;b.querySelectorAll('.scb').forEach(x=>{const q=x.getBoundingClientRect();const d=Math.min(1,Math.abs(q.top+q.height/2-mid)/(H*.75));x.style.transform='scale('+(1-d*.07).toFixed(3)+')';x.style.opacity=(1-d*.45).toFixed(2);});};
 const run=e=>{const b=e.target.closest&&e.target.closest('.scbody');if(!b)return;cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>upd(b));};
 root.addEventListener('scroll',run,true);})();
+(()=>{let rt=null;const re=()=>{clearTimeout(rt);rt=setTimeout(()=>{try{root.classList.add('anim-done');sig='';render();load();}catch(e){}},300);};
+window.addEventListener('resize',re);window.addEventListener('orientationchange',re);document.addEventListener('fullscreenchange',re);document.addEventListener('webkitfullscreenchange',re);window.addEventListener('pageshow',re);})();
 (async()=>{
 root.innerHTML='<div class="msg" style="margin:auto">Loading…</div>';
-try{const cs=await (await fetch('/api/v1/organizations/me/coaches',H)).json();const cl=cs.coaches||cs;const seen={};const lists=await Promise.all((Array.isArray(cl)?cl:[]).map(async co=>{try{const j=await (await fetch('/api/v1/coaches/'+co.id+'/clients?per_page=200',H)).json();return (j.clients||[]).filter(c=>c.state==='active').map(c=>{c._coach=co.first_name||'';return c;});}catch(e){return [];}}));lists.forEach(l=>l.forEach(c=>{if(!seen[c.slug]){seen[c.slug]=1;all.push(c);}}));}catch(e){}
-if(!all.length){try{all=((await (await fetch('/api/v1/clients?per_page=200',H)).json()).clients||[]).filter(c=>c.state==='active');}catch(e){}}
+const fetchAll=async()=>{const out=[];
+try{const cs=await (await fetch('/api/v1/organizations/me/coaches',H)).json();const cl=cs.coaches||cs;const seen={};const lists=await Promise.all((Array.isArray(cl)?cl:[]).map(async co=>{try{const j=await (await fetch('/api/v1/coaches/'+co.id+'/clients?per_page=200',H)).json();return (j.clients||[]).filter(c=>c.state==='active').map(c=>{c._coach=co.first_name||'';return c;});}catch(e){return [];}}));lists.forEach(l=>l.forEach(c=>{if(!seen[c.slug]){seen[c.slug]=1;out.push(c);}}));}catch(e){}
+if(!out.length){try{return ((await (await fetch('/api/v1/clients?per_page=200',H)).json()).clients||[]).filter(c=>c.state==='active');}catch(e){}}
+return out;};
+let cached=null;try{const cc0=JSON.parse(localStorage.getItem('lhp_all')||'null');if(cc0&&cc0.a&&cc0.a.length&&Date.now()-cc0.t<6048e5)cached=cc0;}catch(e){}
+if(cached){all=cached.a;fetchAll().then(l=>{if(l.length){try{localStorage.setItem('lhp_all',JSON.stringify({t:Date.now(),a:l}));}catch(e){}}});}
+else{all=await fetchAll();if(all.length){try{localStorage.setItem('lhp_all',JSON.stringify({t:Date.now(),a:all}));}catch(e){}}}
 if(!all.length){root.innerHTML='<div class="msg" style="margin:auto">Could not load clients. Make sure you are signed in to CoachRx.</div>';return;}
 {const G=all.find(c=>c.slug===GRP);if(G){G.name='Group';G._grp=1;}}
 try{sel=JSON.parse(localStorage.getItem('lhp_sel2')||'[]').filter(s=>all.some(c=>c.slug===s)).slice(0,MAX);}catch(e){sel=[];}
